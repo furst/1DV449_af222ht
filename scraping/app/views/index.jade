@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	h1.
+		Mina dessertrecept
+
+	each recipe, i in recipes
+		.recipe
+			img(src = recipe['localImg'])
+			h2= recipe['title']
+			p= recipe['text']
+			a(href = recipe['href']) Gå till recept
+			hr
