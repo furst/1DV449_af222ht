@@ -23,8 +23,8 @@ var fs = require('fs');
 
 var download = function(uri, filename){
 	request.head(uri, function(err, res, body){
-		console.log('content-type:', res.headers['content-type']);
-		console.log('content-length:', res.headers['content-length']);
+		//console.log('content-type:', res.headers['content-type']);
+		//console.log('content-length:', res.headers['content-length']);
 
 		request(uri).pipe(fs.createWriteStream(filename));
 	});
@@ -53,7 +53,7 @@ app.get('/scrape', function(req, res) {
 
 	request({uri: 'http://www.arla.se/sok/efterratt/'}, function(err, response, body){
 		var self = this;
-		self.items = new Array(); //I feel like I want to save my results in an array
+		self.items = 0;
 
 		//Just a basic error check
 		if(err && response.statusCode !== 200){console.log('Request error.');}
@@ -69,8 +69,7 @@ app.get('/scrape', function(req, res) {
 
                 // Set our collection
 				var collection = db.get('usercollection');
-
-				collection.remove();
+				//collection.remove();
 
 				$recipes.each(function (i, item) {
 
@@ -90,35 +89,36 @@ app.get('/scrape', function(req, res) {
 
                     download($img.attr('src') , 'public/images/' + imgName);
 
-					// Submit to the DB
-					collection.insert({
-						"href" : $(item).attr('href'),
-						"img" : $img.attr('src'),
-						"localImg" : 'images/' + imgName,
-						'title' : $title.trim(),
-						'text' : $text
-					}, function (err, doc) {
-						if (err) {
-							// If it failed, return error
-							res.send("There was a problem adding the information to the database.");
-						}
-						else {
-							console.log('Data added');
+                    collection.find({ title : $title.trim() }, function(e, docs) {
+
+						if (docs.length == 0) {
+							// Submit to the DB
+							collection.insert({
+								"href" : $(item).attr('href'),
+								"img" : $img.attr('src'),
+								"localImg" : 'images/' + imgName,
+								'title' : $title.trim(),
+								'text' : $text,
+								'created' : new Date(),
+								'scraped' : '1'
+							}, function (err, doc) {
+								if (err) {
+									// If it failed, return error
+									res.send("There was a problem adding the information to the database.");
+								}
+								else {
+									console.log('Data added');
+								}
+							});
+						} else {
+							collection.update({ title : $title.trim() }, { $inc: {scraped : 1 }});
 						}
 					});
 
-					//and add all that data to my items array
-					self.items[i] = {
-						href: $(item).attr('href'),
-						img: $img.attr('src'),
-						title: $title.trim(),
-						text: $text
-					};
 				});
 
 				res.render('scrape', {
-					title: 'Dessertscraping',
-					items: self.items
+					title: 'Dessertscraping'
 				});
 			}
 		});

@@ -8,6 +8,8 @@ block content
 		.recipe
 			img(src = recipe['localImg'])
 			h2= recipe['title']
+			p= recipe['created']
+			p= recipe['scraped']
 			p= recipe['text']
 			a(href = recipe['href']) Gå till recept
 			hr
