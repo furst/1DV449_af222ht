@@ -2,14 +2,13 @@ extends layout
 
 block content
 	h1.
-		Mina dessertrecept
+		Mina Favoritrecept
 
 	each recipe, i in recipes
 		.recipe
 			img(src = recipe['localImg'])
 			h2= recipe['title']
-			p= recipe['created']
-			p= recipe['scraped']
-			p= recipe['text']
-			a(href = recipe['href']) Gå till recept
+			p Senast skrapad: #{recipe['date']}
+			p Skrapad #{recipe['scraped']} gånger
+			p= recipe['content']
 			hr
