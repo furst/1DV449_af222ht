@@ -1,7 +1,7 @@
 # Reflektion
 
 ## 1
-1. Jag valde att jobba med Node.js, Phantom.js och Jquery för att lösa uppgiften. Har aldrig jobbat med scraping tidigare men jag fick för mig att det borde vara lättast att använda javascript för komma åt dom-elementen. Nu kan jag inte jämföra hur snabbt det hade gått om jag hade använt php men det kändes rätt smidigt när jag väl hade lört mig node.js som jag aldrig har jobbat med tidigare. Node.js är javascript som körs på serversidan.
+Jag valde att jobba med Node.js, Phantom.js och Jquery för att lösa uppgiften. Har aldrig jobbat med scraping tidigare men jag fick för mig att det borde vara lättast att använda javascript för komma åt dom-elementen. Nu kan jag inte jämföra hur snabbt det hade gått om jag hade använt php men det kändes rätt smidigt när jag väl hade lört mig node.js som jag aldrig har jobbat med tidigare. Node.js är javascript som körs på serversidan.
 
 ## 2
 * Elementen som skrapas kan lätt ändras och då kraschar applikationen
