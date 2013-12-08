@@ -77,6 +77,14 @@ För att en användare inte ska kunna stoppa in en oändlig mängd data i som sp
 
 Jag ändrar textfältens maxlängd på klientsidan och validerar även med strlen() med serversidans php.
 
+## Long Polling - Extrauppgift 1
+Jag har använts mig av av long polling för att lösa den uppgift. Det går på ut på att jag kör en ajax-request med en timestamp som kallar på en php-funktion. Här jämför jag timestampen med den senaste ändringen i databasen hela tiden, requesten blir "pending". När ändringen är nyare än timestampen i urlen så printar jag ut den nya posten och börjar om.
+
+Denna lösning gör att det blir väldigt smidigt för användaren att se sin nya data. Man kan vara säker på att man alltid har det senaste.
+Vissa webbservrar är inte anpassade för detta, apache ska tydligen inte hantera denna threading så bra så att sidan kan bli seg. Däremot finns det andra serverlösningar som är betydligt bättre.
+
+Min applikation är en aning buggig. Första gången man laddar en producent får man en dubblett tillexempel. Men konceptet fungerar.
+
 
 
 

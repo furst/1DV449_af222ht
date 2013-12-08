@@ -6,28 +6,28 @@ Connection::openProducer();
 Connection::openDb();
 
 // get the specific message
-function getMessage($nr) {
+function getMessage($id) {
 
-	$q = "SELECT * FROM messages WHERE serial = '$nr'";
+	$mysqli = new \mysqli('localhost', 'root', 'root', 'labb2');
 
-	$result;
-	$stm;
-	try {
-		$stm = Connection::$db->prepare($q);
-		$stm->execute();
-		$result = $stm->fetchAll();
+	$stmt = $mysqli->prepare("SELECT id, name, content FROM message WHERE pid = ? ORDER BY created DESC;");
+
+	$stmt->bind_param('s', $id);
+
+	$stmt->execute();
+
+	$stmt->bind_result($id, $name, $message);
+
+	$result = array();
+	while ($stmt->fetch()) {
+		$result[] = array("id" => $id, "name" => $name, "message" => $message);
 	}
-	catch(PDOException $e) {
-		echo("Error creating query: " .$e->getMessage());
-		return false;
-	}
 
-	Connection::$db = null;
+	$stmt->close();
 
-	if($result)
-		return $result[0];
-	else
-	 	return false;
+	$mysqli->close();
+
+	return $result;
 }
 
 

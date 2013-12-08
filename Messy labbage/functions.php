@@ -15,7 +15,7 @@ if(isset($_GET['function'])) {
 
         $name = filter_input(INPUT_POST | INPUT_GET, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
         $message = filter_input(INPUT_POST | INPUT_GET, 'message', FILTER_SANITIZE_SPECIAL_CHARS);
-        $pid = filter_input(INPUT_POST | INPUT_GET, 'pid', FILTER_SANITIZE_SPECIAL_CHARS);
+        $mid = filter_input(INPUT_POST | INPUT_GET, 'mid', FILTER_SANITIZE_SPECIAL_CHARS);
 
         $csrf = new Csrf();
 
@@ -30,8 +30,8 @@ if(isset($_GET['function'])) {
           echo "Meddelande är i ogiltigt format";
         }
         else {
-          addToDB($name, $message, $pid);
-          echo "Det gick fint! Ladda om sidan för att se ditt meddelande!";
+          addToDB($name, $message, $mid);
+          echo "Meddelande publicerat";
         }
     }
     elseif($_GET['function'] == 'producers') {
@@ -41,6 +41,6 @@ if(isset($_GET['function'])) {
    	   	echo(json_encode(getMessageIdForProducer($_GET["pid"])));
     }
     elseif($_GET['function'] == 'getMessage') {
-   	   	echo(json_encode(getMessage($_GET["serial"])));
+   	   	echo(json_encode(getMessage($_GET["pid"])));
     }
 }

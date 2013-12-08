@@ -79,6 +79,7 @@
 		  	  				<a id="p_img_link" class="example-image-link" href="" data-lightbox="example-set" title="">
 		  						<img id="p_img"  class="example-image" src="" alt="" width="100" height="100"/>
 		  					</a>
+		  					<p class="messageholder"></p>
 		  	     		</div>
 
 	        			<div class="col-md-6">

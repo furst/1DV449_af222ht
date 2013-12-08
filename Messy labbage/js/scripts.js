@@ -1,3 +1,34 @@
+var timestamp = null;
+function comet(id) {
+	$.ajax({
+		type : 'GET',
+		url : 'getMessage.php',
+		data : {timestamp: timestamp, mid: id},
+		async : true,
+		cache : false,
+
+		success : function(data) {
+			var json = eval('(' + data + ')');
+			if(json['msg'] == ''){
+				console.log('empty');
+			} else {
+				$( "#mess_p_mess" ).prepend( "<p class='message_container'>" +json.msg +"<br />Skrivet av: " + json.name +"</p>");
+			}
+			timestamp  = json['timestamp'];
+
+			setTimeout(function() {
+				comet(id);
+			}, 1000);
+		},
+		error : function(XMLHttpRequest, textstatus, error) {
+			//alert(error);
+			setTimeout(function() {
+				comet(id);
+			}, 15000);
+		}
+	});
+}
+
 $( document ).ready(
 
 	function() {
@@ -11,7 +42,7 @@ $( document ).ready(
 
 			var name_val = $('#name_txt').val();
 			var message_val = $('#message_ta').val();
-			var pid =  $('#mess_inputs').val();
+			var pid =  $('#mess_p_headline').attr('class');
 			var token = $('#token').val();
 
 			// make ajax call to logout
@@ -20,12 +51,13 @@ $( document ).ready(
 				url: "functions.php",
 				data: {function: "add", name: name_val, message: message_val, pid: pid, token: token}
 			}).done(function(data) {
-				alert(data);
+				$('p.messageholder').text(data);
 			});
 		});
 
 		$('.producer-link').on('click', function(event) {
 			var pid = $(this).data('id');
+			comet(pid);
 			changeProducer(pid);
 		});
 
@@ -46,7 +78,7 @@ $( document ).ready(
 
 				var j = JSON.parse(data);
 
-				$("#mess_p_headline").text("Meddelande till " +j.name +", " +j.city);
+				$("#mess_p_headline").removeClass().addClass(j.producerID).text("Meddelande till " +j.name +", " +j.city);
 
 				if(j.url !== "") {
 
@@ -66,31 +98,16 @@ $( document ).ready(
 				}
 			});
 
-			// Get all the messages for the producers through functions.php
 			$.ajax({
 				type: "GET",
 				url: "functions.php",
-				data: {function: "getIdsOfMessages", pid: pid}
+				data: {function: "getMessage", pid: pid},
+				timeout: 2000
 			}).done(function(data) {
-
-				// all the id:s for the messages for this producer
-				var ids = JSON.parse(data);
-
-				// Loop through all the ids and make calls for the messages
-				if(ids !== false){
-					ids.forEach(function(entry) {
-						// problems with the messages not coming in the right order :/
-						$.ajax({
-							type: "GET",
-							url: "functions.php",
-							data: {function: "getMessage", serial: entry.serial},
-							timeout: 2000
-						}).done(function(data) {
-							var j = JSON.parse(data);
-							$( "#mess_p_mess" ).append( "<p class='message_container'>" +j.message +"<br />Skrivet av: " +j.name +"</p>");
-						});
-					});
-				}
+				var j = JSON.parse(data);
+				j.forEach(function(entry) {
+					$( "#mess_p_mess" ).append( "<p class='message_container'>" +entry.message +"<br />Skrivet av: " +entry.name +"</p>");
+				});
 			});
 
 			// show the div if its unvisible
@@ -99,3 +116,7 @@ $( document ).ready(
 		}
 	}
 );
+
+
+
+

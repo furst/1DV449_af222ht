@@ -1,35 +1,26 @@
 <?php
 
-require_once('Connection.php');
+function addToDB($name, $message, $id) {
 
-Connection::openDb();
+	$mysqli = new \mysqli('localhost', 'root', 'root', 'labb2');
 
-function addToDB($name, $message, $pid) {
+	$stmt = $mysqli->prepare("INSERT INTO message (name, content, pid) VALUES (?, ?, ?);");
 
-	$q = "INSERT INTO messages (message, name, pid) VALUES(?, ?, ?)";
+	$stmt->bind_param('sss', $name, $message, $id);
 
-	try {
-		$stmt = Connection::$db->prepare($q);
+	$stmt->execute();
 
-		$stmt->bindParam(1, $message);
-		$stmt->bindParam(2, $name);
-		$stmt->bindParam(3, $pid);
+	$stmt->close();
 
-		$stmt->execute();
+	$mysqli->close();
 
-		if(!$stmt) {
-			die("Fel vid insert");
-		}
-	}
-	catch(PDOException $e) {
-		die("Something went wrong -> " .$e->getMessage());
-	}
-
-	$msg = 'skriv';
-	$file = 'data.txt';
-	$handle = fopen($file, 'a');
-	fwrite($handle, $msg);
+	$file = 'name.txt';
+	$handle = fopen($file, 'w');
+	fwrite($handle, $name);
 	fclose($handle);
 
-	Connection::$db = null;
+	$file = 'message.txt';
+	$handle = fopen($file, 'w');
+	fwrite($handle, $message);
+	fclose($handle);
 }
