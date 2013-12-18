@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Mashup</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/style.css">
+
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf4M9r7mt3Gu6xBtL8b-WJJGIp6pjK1Ss&sensor=false"></script>
+
+    </head>
+    <body>
+
+        <div class="container">
+
+            <div class="info">
+                <h1>Mashup</h1>
+                <h2>Välj kategori:</h2>
+                <ul>
+                    <li><a href="#" class="all">Visa alla</a></li>
+                    <li><a href="#" class="road">Vägtrafik</a></li>
+                    <li><a href="#" class="kollektiv">Kollektivtrafik</a></li>
+                    <li><a href="#" class="planed">Planerad störning</a></li>
+                    <li><a href="#" class="ovrigt">Övrigt</a></li>
+                </ul>
+
+                <h2>Prioritet:</h2>
+
+                <ul>
+                    <li class="black">Mycket allvarlig händelse</li>
+                    <li class="red">Stor händelse</li>
+                    <li class="blue">Störning</li>
+                    <li class="grey">Information</li>
+                    <li class="green">Mindre störning</li>
+                </ul>
+
+            </div>
+
+            <div id="map-canvas" style="height:1200px; width:100%;"></div>
+
+        </div>
+
+        <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="js/handlebars-v1.1.2.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>-->
+        <script src="js/script.js"></script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

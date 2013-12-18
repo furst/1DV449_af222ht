@@ -1,0 +1,10 @@
+# first line must not contain any rules
+
+/*.gif
+
+images/*
+
+logs/*
+tmp/*
+
+!.gitignore
