@@ -7,7 +7,7 @@ Ett CMS med simplenote helt enkelt.
 Jag fick idéen genom att jag har jobbat en del med kunder som vill ha enkla hemsidor med ett nyhetsflöde och undersidor med enkel information. Det allra flesta av dagens cms är alldeles för avancerade för dessa ändamål och kunden tycker ofta det är klurigt att förstå systemen. Jag har därför skapat detta som är superenkelt att använda och även funkar i mobilen genom en app. Man behöver aldrig röra sin sida egentligen.
 
 ## Användbart
-Github:
+Github: https://github.com/furst/1DV449_af222ht/tree/master/simplenote
 
 Videoredovisning: http://youtu.be/U-11f3rSyuc
 
